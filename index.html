@@ -1,8 +1,183 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+<<!DOCTYPE 
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بقالة التوفير - الطلبات</title>
+    <style>
+        :root { --main: #16a34a; --bg: #f8fafc; }
+        body { font-family: sans-serif; background-color: var(--bg); margin: 0; padding: 0; text-align: center; }
+        header { background: var(--main); color: white; padding: 20px; }
+        .container { max-width: 600px; margin: auto; padding: 20px; }
+        .admin-panel { background: white; padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 2px dashed var(--main); }
+        .admin-panel input { padding: 8px; margin: 5px; border: 1px solid #ddd; border-radius: 5px; width: 40%; }
+        .products { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .card { background: white; padding: 10px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .price { color: var(--main); font-weight: bold; display: block; margin: 5px 0; }
+        .buy-btn { background: var(--main); color: white; border: none; padding: 8px; border-radius: 5px; width: 100%; cursor: pointer; }
+        .cart-box { position: sticky; bottom: 10px; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); border-top: 4px solid var(--main); margin-top: 30px; }
+        .checkout-btn { background: #25d366; color: white; border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🛒 بقالة التوفير</h1>
+    <p>اختر أغراضك وسنصلك فوراً</p>
+</header>
+
+<div class="container">
+    <div class="admin-panel">
+        <h4>➕ إضافة غرض جديد</h4>
+        <input type="text" id="n" placeholder="اسم الغرض">
+        <input type="number" id="p" placeholder="السعر">
+        <button onclick="addP()" style="background:#333; color:white; border:none; padding:5px 10px; border-radius:5px;">إضافة للمحل</button>
+    </div>
+
+    <div class="products" id="grid">
+        <div class="card"><h3>كرتون ماء</h3><span class="price">15 ريال</span><button class="buy-btn" onclick="add('كرتون ماء', 15)">إضافة</button></div>
+        <div class="card"><h3>زيت زيتون</h3><span class="price">45 ريال</span><button class="buy-btn" onclick="add('زيت زيتون', 45)">إضافة</button></div>
+        <div class="card"><h3>كيس أرز</h3><span class="price">65 ريال</span><button class="buy-btn" onclick="add('كيس أرز', 65)">إضافة</button></div>
+        <div class="card"><h3>علبة عسل</h3><span class="price">120 ريال</span><button class="buy-btn" onclick="add('علبة عسل', 120)">إضافة</button></div>
+    </div>
+
+    <div class="cart-box">
+        <h3>🛍️ سلة العميل</h3>
+        <div id="items">السلة فارغة</div>
+        <div style="font-weight:bold; margin-top:10px;">المجموع: <span id="total">0</span> ريال</div>
+        <button class="checkout-btn" onclick="send()">إرسال الطلب واتساب ✅</button>
+    </div>
+</div>
+
+<script>
+    let c = []; let t = 0;
+    function add(n, p) { c.push({n, p}); t += p; draw(); }
+    function addP() {
+        let n = document.getElementById('n').value; let p = parseFloat(document.getElementById('p').value);
+        if(n && p) {
+            document.getElementById('grid').innerHTML += `<div class="card"><h3>${n}</h3><span class="price">${p} ريال</span><button class="buy-btn" onclick="add('${n}', ${p})">إضافة</button></div>`;
+            document.getElementById('n').value=''; document.getElementById('p').value='';
+        }
+    }
+    function draw() {
+        document.getElementById('items').innerHTML = c.length === 0 ? "السلة فارغة" : c.map(i => `<div>${i.n} - ${i.p} ريال</div>`).join('');
+        document.getElementById('total').innerText = t;
+    }
+    function send() {
+        if(c.length === 0) return alert('السلة فارغة!');
+        let m = "طلب جديد من بقالة التوفير:\n" + c.map(i => `- ${i.n} (${i.p} ريال)`).join('\n') + "\n\nالمجموع: " + t + " ريال";
+        window.open("https://wa.me/?text=" + encodeURIComponent(m));
+    }
+</script>
+</body>
+</html>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بقالة التوفير</title>
+    <style>
+        :root { --primary: #16a34a; --bg: #f0fdf4; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); margin: 0; padding: 0; }
+        header { background-color: var(--primary); color: white; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .container { max-width: 800px; margin: auto; padding: 20px; }
+        
+        /* تصميم المنتجات */
+        .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+        .card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; border: 1px solid #e2e8f0; }
+        .card h3 { margin: 10px 0; font-size: 1.1em; color: #333; }
+        .price { color: var(--primary); font-weight: bold; margin-bottom: 15px; display: block; }
+        
+        button { background-color: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; width: 100%; transition: 0.3s; }
+        button:hover { background-color: #15803d; }
+
+        /* سلة التسوق */
+        .cart-section { margin-top: 40px; background: white; padding: 20px; border-radius: 15px; border-top: 5px solid var(--primary); }
+        .cart-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .total { font-size: 1.3em; font-weight: bold; margin-top: 15px; color: #1f2937; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🛒 بقالة التوفير</h1>
+    <p>أجود المنتجات بأقل الأسعار</p>
+</header>
+
+<div class="container">
+    <div class="products">
+        <div class="card">
+            <h3>كرتون ماء</h3>
+            <span class="price">15 ريال</span>
+            <button onclick="addToCart('كرتون ماء', 15)">إضافة للسلة</button>
+        </div>
+        <div class="card">
+            <h3>زيت زيتون</h3>
+            <span class="price">45 ريال</span>
+            <button onclick="addToCart('زيت زيتون', 45)">إضافة للسلة</button>
+        </div>
+        <div class="card">
+            <h3>كيس أرز</h3>
+            <span class="price">65 ريال</span>
+            <button onclick="addToCart('كيس أرز', 65)">إضافة للسلة</button>
+        </div>
+        <div class="card">
+            <h3>علبة عسل</h3>
+            <span class="price">120 ريال</span>
+            <button onclick="addToCart('علبة عسل', 120)">إضافة للسلة</button>
+        </div>
+    </div>
+
+    <div class="cart-section">
+        <h2>🛍️ سلة المشتريات</h2>
+        <div id="cart-items">
+            <p style="color: #888;">السلة فارغة حالياً..</p>
+        </div>
+        <div class="total">المجموع: <span id="total-price">0</span> ريال</div>
+        <button style="margin-top: 15px; background-color: #1f2937;" onclick="checkout()">إتمام الطلب (واتساب)</button>
+    </div>
+</div>
+
+<script>
+    let cart = [];
+    let total = 0;
+
+    function addToCart(name, price) {
+        cart.push({name, price});
+        total += price;
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        const cartList = document.getElementById('cart-items');
+        const totalDisplay = document.getElementById('total-price');
+        
+        cartList.innerHTML = '';
+        cart.forEach(item => {
+            cartList.innerHTML += `<div class="cart-item"><span>${item.name}</span><span>${item.price} ريال</span></div>`;
+        });
+        
+        totalDisplay.innerText = total;
+    }
+
+    function checkout() {
+        if(cart.length === 0) return alert('السلة فارغة!');
+        let message = "طلب جديد من بقالة التوفير:\n";
+        cart.forEach(item => message += `- ${item.name}\n`);
+        message += `\nالمجموع الكلي: ${total} ريال`;
+        
+        // يفتح الواتساب مع نص الطلب
+        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`);
+    }
+</script>
+
+</body>
+</html>
     <title>بقالة التوفير</title>
     <style>
         :root { --primary: #16a34a; --bg: #f0fdf4; }
